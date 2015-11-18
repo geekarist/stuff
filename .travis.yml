@@ -4,10 +4,10 @@ env:
         - ADB_INSTALL_TIMEOUT=15
 android:
     components:
-        - build-tools-21.1.2
+        - build-tools
         - extra-android-support
         - extra-android-m2repository
-        - sys-img-armeabi-v7a-android-21
+        - sys-img-armeabi-v7a-android
 before_script:
     - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
     - emulator -avd test -no-skin -no-audio -no-window &
