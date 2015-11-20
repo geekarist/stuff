@@ -4,6 +4,7 @@ env:
         - ADB_INSTALL_TIMEOUT=15
 android:
     components:
+        - android-23
         - build-tools
         - extra-android-support
         - extra-android-m2repository
