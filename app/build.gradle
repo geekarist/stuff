@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-com.android.ddmlib.DdmPreferences.setTimeOut(30000)
+com.android.ddmlib.DdmPreferences.setTimeOut(600000)
 
 android {
     compileSdkVersion 23
