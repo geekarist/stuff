@@ -1,16 +1,11 @@
 test:
   override:
-    # start the emulator
     - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
         parallel: true
-    # wait for it to have booted
     - circle-android wait-for-boot
-    # run tests  against the emulator.
     - ./gradlew test connectedAndroidTest
-      environment:
-        ADB_INSTALL_TIMEOUT: 10
-    # copy the build outputs to artifacts
+        environment:
+          ADB_INSTALL_TIMEOUT: 10
     - cp -r stuff/build/outputs $CIRCLE_ARTIFACTS
-    # copy the test results to the test results directory.
     - cp -r stuff/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
