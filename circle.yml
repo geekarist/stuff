@@ -11,6 +11,6 @@ test:
       environment:
         ADB_INSTALL_TIMEOUT: 10
     # copy the build outputs to artifacts
-    - cp -r my-project/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r stuff/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
-    - cp -r my-project/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+    - cp -r stuff/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
