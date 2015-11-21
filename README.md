@@ -4,3 +4,11 @@
 
 Don't lose your time tracking your stuff. This app will do it for you.
 
+Features:
+
+- Display list of items
+- Display details about an item
+
+Planned features:
+
+- Edit item description
