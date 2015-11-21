@@ -1,6 +1,3 @@
-machine:
-  environment:
-    ADB_INSTALL_TIMEOUT: 10
 test:
   override:
     # start the emulator
@@ -11,6 +8,8 @@ test:
     - circle-android wait-for-boot
     # run tests  against the emulator.
     - ./gradlew test connectedAndroidTest
+      environment:
+        ADB_INSTALL_TIMEOUT: 10
     # copy the build outputs to artifacts
     - cp -r my-project/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
