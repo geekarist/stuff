@@ -7,6 +7,6 @@ test:
         background: true
         parallel: true
     - circle-android wait-for-boot
-    - ADB_INSTALL_TIMEOUT=10 ./gradlew clean test connectedAndroidTest
+    - ADB_INSTALL_TIMEOUT=10 ./gradlew clean test connectedAndroidTest --stacktrace --info
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
     - cp -r app/build/reports/* $CIRCLE_TEST_REPORTS
