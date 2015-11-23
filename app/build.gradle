@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'spoon'
 
 com.android.ddmlib.DdmPreferences.setTimeOut(600000)
 
@@ -33,4 +34,5 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.9'
 }
