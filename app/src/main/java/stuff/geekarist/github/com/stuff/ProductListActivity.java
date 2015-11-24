@@ -1,6 +1,8 @@
 package stuff.geekarist.github.com.stuff;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +39,9 @@ public class ProductListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        disableLockScreen();
+
         setContentView(R.layout.activity_product_app_bar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,6 +72,16 @@ public class ProductListActivity extends AppCompatActivity
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
+    }
+
+    private void disableLockScreen() {
+        // http://developer.android.com/tools/testing/activity_testing.html#UnlockDevice
+        final boolean isDebuggable = (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
+        if (isDebuggable) {
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            KeyguardManager.KeyguardLock lock = keyguardManager.newKeyguardLock(ProductListActivity.class.getSimpleName());
+            lock.disableKeyguard();
+        }
     }
 
     /**
