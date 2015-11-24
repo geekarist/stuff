@@ -1,16 +1,16 @@
 dependencies:
-    post:
-    - rm -r ~/.gradle
+post:
+- rm -r ~/.gradle
 test:
-    override:
-    - mksdcard -l e 512M mysdcard.img
-    - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim -sdcard mysdcard.img:
+override:
+  - mksdcard -l e 512M mysdcard.img
+  - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim -sdcard mysdcard.img:
       background: true
       parallel: true
-    - circle-android wait-for-boot
-    - adb shell input keyevent 82
+  - circle-android wait-for-boot
+  - adb shell input keyevent 82:
       background: true
-    - ADB_INSTALL_TIMEOUT=10 ./gradlew clean spoon --stacktrace --info
-    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-    - cp -r app/build/reports/* $CIRCLE_TEST_REPORTS
-    - cp -r app/build/spoon/ $CIRCLE_TEST_REPORTS
+  - ADB_INSTALL_TIMEOUT=10 ./gradlew clean spoon --stacktrace --info
+  - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+  - cp -r app/build/reports/* $CIRCLE_TEST_REPORTS
+  - cp -r app/build/spoon/ $CIRCLE_TEST_REPORTS
