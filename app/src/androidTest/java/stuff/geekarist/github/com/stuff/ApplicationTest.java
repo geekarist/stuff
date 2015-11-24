@@ -10,6 +10,8 @@ import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
+import com.squareup.spoon.Spoon;
+
 import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
@@ -31,6 +33,7 @@ public class ApplicationTest {
 
     @Test
     public void shouldDisplayTitle() {
+        Spoon.screenshot(mActivityRule.getActivity(), "Application");
         onView(withText("Stuff")).check(matches(isDisplayed()));
     }
 }

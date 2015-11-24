@@ -7,6 +7,7 @@ test:
         background: true
         parallel: true
     - circle-android wait-for-boot
+    - adb shell input keyevent 82 &
     - ADB_INSTALL_TIMEOUT=10 ./gradlew clean spoon --stacktrace --info
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
     - cp -r app/build/reports/* $CIRCLE_TEST_REPORTS
