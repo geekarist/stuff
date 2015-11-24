@@ -3,7 +3,8 @@ dependencies:
     - rm -r ~/.gradle
 test:
   override:
-    - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim:
+    - mksdcard -l e 512M mysdcard.img
+    - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim -sdcard mysdcard.img:
         background: true
         parallel: true
     - circle-android wait-for-boot
