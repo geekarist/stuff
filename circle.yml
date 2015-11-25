@@ -11,6 +11,6 @@ test:
     - adb shell input keyevent 82:
         background: true
     - ADB_INSTALL_TIMEOUT=10 ./gradlew clean spoon --stacktrace --info
-    - test -d cp -r app/build/outputs && cp -r app/build/outputs $CIRCLE_ARTIFACTS
-    - test -d app/build/reports && cp -r app/build/reports/* $CIRCLE_TEST_REPORTS
-    - test -d app/build/spoon && cp -r app/build/spoon/ $CIRCLE_TEST_REPORTS
+    - test ! -d app/build/outputs || cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    - test ! -d app/build/reports || cp -r app/build/reports $CIRCLE_TEST_REPORTS
+    - test ! -d app/build/spoon || cp -r app/build/spoon $CIRCLE_TEST_REPORTS
