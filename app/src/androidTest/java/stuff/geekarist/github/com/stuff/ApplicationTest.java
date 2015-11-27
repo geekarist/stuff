@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ApplicationTestCase;
@@ -20,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.*;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
@@ -35,5 +37,12 @@ public class ApplicationTest {
     public void shouldDisplayTitle() {
         Spoon.screenshot(mActivityRule.getActivity(), "Application");
         onView(withText("Stuff")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldOpenItem() {
+        onView(withText("Item 2")).perform(click());
+        Spoon.screenshot(mActivityRule.getActivity(), "Application");
+        onView(withText("Details about Item: 2")).check(matches(isDisplayed()));
     }
 }
