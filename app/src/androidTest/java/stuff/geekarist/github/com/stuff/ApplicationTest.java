@@ -1,48 +1,66 @@
 package stuff.geekarist.github.com.stuff;
 
-import android.app.Application;
+import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.assertion.ViewAssertions;
+import android.support.test.espresso.core.deps.guava.collect.Iterables;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ApplicationTestCase;
+import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import android.support.test.runner.lifecycle.Stage;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.view.View;
 
 import com.squareup.spoon.Spoon;
 
-import junit.framework.Assert;
-
-import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.*;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import java.io.File;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class ApplicationTest {
     @Rule
-    public ActivityTestRule<ProductListActivity> mActivityRule = new ActivityTestRule(ProductListActivity.class);
+    public ActivityTestRule<ProductListActivity> mActivityRule = new ActivityTestRule<>(ProductListActivity.class);
 
     @Test
-    public void shouldDisplayTitle() {
-        Spoon.screenshot(mActivityRule.getActivity(), "Application");
-        onView(withText("Stuff")).check(matches(isDisplayed()));
+    public void shouldDisplayTitle() throws Throwable {
+        screenshot();
+        Espresso.onView(ViewMatchers.withText("Stuff")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
-    public void shouldOpenItem() {
-        onView(withText("Item 2")).perform(click());
-        Spoon.screenshot(mActivityRule.getActivity(), "Application");
-        onView(withText("Details about Item: 2")).check(matches(isDisplayed()));
+    public void shouldOpenItem() throws Throwable {
+        screenshot();
+        Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
+
+        screenshot();
+        Espresso.onView(ViewMatchers.withText(Matchers.containsString("Details about Item: 2")))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+    }
+
+    @NonNull
+    private File screenshot() throws Throwable {
+        return Spoon.screenshot(getCurrentActivity(), "Application");
+    }
+
+    private Activity getCurrentActivity() throws Throwable {
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        final Activity[] activity = new Activity[1];
+        mActivityRule.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                java.util.Collection<Activity> activities =
+                        ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                activity[0] = Iterables.getOnlyElement(activities);
+            }
+        });
+        return activity[0];
     }
 }
