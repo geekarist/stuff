@@ -54,11 +54,14 @@ public class ApplicationTest {
         Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
 
         // When
+        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
 
         // Then
+        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.product_detail))
                 .check(ViewAssertions.matches(Matchers.not(ViewMatchers.isDisplayed())));
+        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.product_detail_edit))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
