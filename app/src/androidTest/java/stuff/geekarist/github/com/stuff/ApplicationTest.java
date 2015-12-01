@@ -61,7 +61,6 @@ public class ApplicationTest {
         screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.product_detail))
                 .check(ViewAssertions.matches(Matchers.not(ViewMatchers.isDisplayed())));
-        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.product_detail_edit))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
