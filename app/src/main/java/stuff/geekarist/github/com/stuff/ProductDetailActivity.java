@@ -33,6 +33,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                View detailView = findViewById(R.id.product_detail);
+                detailView.setVisibility(View.GONE);
+                View detailEdit = findViewById(R.id.product_detail_edit);
+                detailEdit.setVisibility(View.VISIBLE);
             }
         });
 
