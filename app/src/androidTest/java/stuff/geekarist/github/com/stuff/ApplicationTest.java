@@ -31,18 +31,15 @@ public class ApplicationTest {
 
     @Test
     public void shouldDisplayTitle() throws Throwable {
-        screenshot();
         Espresso.onView(ViewMatchers.withText("Stuff")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @Test
     public void shouldOpenItem() throws Throwable {
         // When
-        screenshot();
         Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
 
         // Then
-        screenshot();
         Espresso.onView(ViewMatchers.withText(Matchers.containsString("Details about Item: 2")))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
@@ -50,19 +47,37 @@ public class ApplicationTest {
     @Test
     public void shouldEditItem() throws Throwable {
         // Given
-        screenshot();
         Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
 
         // When
-        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
 
         // Then
-        screenshot();
         Espresso.onView(ViewMatchers.withId(R.id.product_detail))
                 .check(ViewAssertions.matches(Matchers.not(ViewMatchers.isDisplayed())));
         Espresso.onView(ViewMatchers.withId(R.id.product_detail_edit))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
+                .check(ViewAssertions.matches(Matchers.allOf(
+                        ViewMatchers.isDisplayed(),
+                        ViewMatchers.withText(Matchers.containsString("Details about Item: 2")))));
+    }
+
+    @Test
+    public void shouldValidateItemEdit() throws Throwable {
+        // Given
+        Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
+
+        // When
+        Espresso.onView(ViewMatchers.withId(R.id.product_detail_edit)).perform(
+                ViewActions.clearText(),
+                ViewActions.typeText("New information!"));
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
+
+        // Then
+        Espresso.onView(ViewMatchers.withId(R.id.product_detail))
+                .check(ViewAssertions.matches(Matchers.allOf(
+                        ViewMatchers.isDisplayed(),
+                        ViewMatchers.withText(Matchers.containsString("New information!")))));
     }
 
     @NonNull

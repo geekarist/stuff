@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * An activity representing a single Product detail screen. This
@@ -20,6 +22,8 @@ import android.view.MenuItem;
  */
 public class ProductDetailActivity extends AppCompatActivity {
 
+    private boolean mEditingInformations;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,16 +35,25 @@ public class ProductDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                View detailView = findViewById(R.id.product_detail);
-                detailView.setVisibility(View.GONE);
-                View detailEdit = findViewById(R.id.product_detail_edit);
-                detailEdit.setVisibility(View.VISIBLE);
+                if (!mEditingInformations) {
+                    TextView detailView = (TextView) findViewById(R.id.product_detail);
+                    detailView.setVisibility(View.GONE);
+                    EditText detailEdit = (EditText) findViewById(R.id.product_detail_edit);
+                    detailEdit.setVisibility(View.VISIBLE);
+                    detailEdit.setText(detailView.getText());
+                } else {
+                    TextView detailView = (TextView) findViewById(R.id.product_detail);
+                    detailView.setVisibility(View.VISIBLE);
+                    EditText detailEdit = (EditText) findViewById(R.id.product_detail_edit);
+                    detailEdit.setVisibility(View.GONE);
+                    detailView.setText(detailEdit.getText());
+                }
+                mEditingInformations = !mEditingInformations;
             }
         });
 
         // Show the Up button in the action bar.
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // savedInstanceState is non-null when there is fragment state
