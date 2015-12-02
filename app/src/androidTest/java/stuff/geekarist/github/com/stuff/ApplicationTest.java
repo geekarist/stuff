@@ -31,7 +31,6 @@ public class ApplicationTest {
 
     @Test
     public void shouldDisplayTitle() throws Throwable {
-        screenshot();
         Espresso.onView(ViewMatchers.withText("Stuff")).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
