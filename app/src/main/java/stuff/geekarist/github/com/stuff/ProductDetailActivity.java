@@ -31,7 +31,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,12 +41,14 @@ public class ProductDetailActivity extends AppCompatActivity {
                     EditText detailEdit = (EditText) findViewById(R.id.product_detail_edit);
                     detailEdit.setVisibility(View.VISIBLE);
                     detailEdit.setText(detailView.getText());
+                    fab.setImageResource(R.drawable.ic_save_white_24dp);
                 } else {
                     TextView detailView = (TextView) findViewById(R.id.product_detail);
                     detailView.setVisibility(View.VISIBLE);
                     EditText detailEdit = (EditText) findViewById(R.id.product_detail_edit);
                     detailEdit.setVisibility(View.GONE);
                     detailView.setText(detailEdit.getText());
+                    fab.setImageResource(R.drawable.ic_mode_edit_white_24dp);
                 }
                 mEditingInformations = !mEditingInformations;
             }
