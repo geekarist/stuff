@@ -80,6 +80,27 @@ public class ApplicationTest {
                         ViewMatchers.withText(Matchers.containsString("New information!")))));
     }
 
+    @Test
+    public void shouldSaveItem() throws Throwable {
+        // Given
+        Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.product_detail_edit)).perform(
+                ViewActions.clearText(),
+                ViewActions.typeText("New information!"));
+        Espresso.onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
+
+        // When
+        Espresso.pressBack();
+        Espresso.onView(ViewMatchers.withText("Item 2")).perform(ViewActions.click());
+
+        // Then
+        Espresso.onView(ViewMatchers.withId(R.id.product_detail))
+                .check(ViewAssertions.matches(Matchers.allOf(
+                        ViewMatchers.isDisplayed(),
+                        ViewMatchers.withText(Matchers.containsString("New information!")))));
+    }
+
     @NonNull
     private File screenshot() throws Throwable {
         return Spoon.screenshot(getCurrentActivity(), "Application");
